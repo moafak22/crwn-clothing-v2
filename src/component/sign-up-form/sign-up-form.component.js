@@ -1,6 +1,4 @@
-import { async } from '@firebase/util';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-    import {useState} from 'react'
+import {useState} from 'react'
 import { createAuthuserWithEmailAndPassword, createUserDocumentFromAuth } from '../../utils/firebase/firebase.utils';
 import Button from '../button/button.component';
 import FormInput from '../input-form/input-form.component';
@@ -15,6 +13,7 @@ const defaultSignUpVal = {
 
 
 const SignUpForm = () => {
+
 
     
 const [formField,setFormField] = useState(defaultSignUpVal);
@@ -32,7 +31,6 @@ const handleSubmit = async(e)=>{
     if (password !== confirmpassword)
        { alert("password do not match confirm password")
         return;}
-
     try{
         const {user} = await createAuthuserWithEmailAndPassword(email,password)
         await createUserDocumentFromAuth (user,{displayName});
@@ -40,8 +38,6 @@ const handleSubmit = async(e)=>{
     }catch(e){
         console.log("00000000000" + e)
     }
-
-
 }
 
 const onChangeHandler = (e)=>{
@@ -56,7 +52,7 @@ const onChangeHandler = (e)=>{
         
         <div className='sign-up-container'>
             <h2>Do not have an account?</h2>
-            <spam>Sign up with your email amd password</spam>
+            <span>Sign up with your email amd password</span>
             <form onSubmit={handleSubmit}>
                 <FormInput label="DisplayName" type="text" onChange={onChangeHandler} name="displayName" value={displayName} required/>
                 <FormInput label="Email" type="email" onChange={onChangeHandler} name="email" value={email} required/>

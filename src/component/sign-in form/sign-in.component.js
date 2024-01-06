@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import {useState } from 'react'
 import Button from '../button/button.component';
 import FormInput from '../input-form/input-form.component';
 import "./sign-in.styles.scss"
@@ -9,15 +9,23 @@ import {
   } from '../../utils/firebase/firebase.utils';
 
 
-const defaultSignInVar = {
+const defaultSignInVar = {  
     email:"",
     password:''
 }
 
 
 const SignInForm = () => {
+    const resetFormFields = () =>
+    {
+     setSignInVar(defaultSignInVar);
+    }
+
     const [signInVar,setSignInVar] =useState(defaultSignInVar);
     const {email,password} = signInVar
+    
+
+
     const onChangeHandler = (e)=>{
         const{name,value} = e.target;
         setSignInVar ({...signInVar,[name]:value})
@@ -25,21 +33,17 @@ const SignInForm = () => {
     }   
 
     const signInWithGoogle = async () => {
-        const { user } = await signInWithGooglePopup();
-        await createUserDocumentFromAuth(user);
+     await signInWithGooglePopup();
+         
     };
 
     const handleSubmit = async(e)=>{
-        e.preventDefault();
-        console.log("000000000000000000000")
-    
-        
+        e.preventDefault();        
         try{
-            const res = await signInuserWithEmailAndPassword(email,password)
-            console.log (res)
-
-           
+            const {user} = await signInuserWithEmailAndPassword(email,password)
+            resetFormFields();
         }catch(e){
+
         }
     }
 
@@ -48,7 +52,7 @@ const SignInForm = () => {
     return ( 
         <div className='sign-in-container'>
         <h2>I already have an account</h2>
-        <spam>Sign ip with your email amd password</spam>
+        <span>Sign ip with your email amd password</span>
         <form onSubmit={handleSubmit}>
             <FormInput label="Email" type="email" onChange={onChangeHandler} name="email" value={email} required/>
             <FormInput label="Password" type="password" onChange={onChangeHandler} name="password" value={password} required/>

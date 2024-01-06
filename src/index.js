@@ -4,12 +4,21 @@ import './index.scss';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter} from "react-router-dom";
+import { UserProvider } from "./context/user.context";
+import { ProductsProvider } from './context/products.context';
+import { NavigationProvider } from './context/navigation.context';
 
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <App />
+    <UserProvider>
+    <ProductsProvider>
+    <NavigationProvider>
+        <App />
+    </NavigationProvider>
+    </ProductsProvider>
+    </UserProvider>
     </BrowserRouter>
     
   </React.StrictMode>,
